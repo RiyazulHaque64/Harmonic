@@ -1,60 +1,224 @@
 import { FaUserAlt, FaKey } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
-import { BsCloudUploadFill } from "react-icons/bs";
+import { BiError } from "react-icons/bi";
+import { HiOutlineXMark } from "react-icons/hi2";
+import {
+  // BsCloudUploadFill,
+  BsEyeFill,
+  BsFillEnvelopeAtFill,
+} from "react-icons/bs";
+import { useState } from "react";
+import googleIcon from "../assets/image/google_icon.png";
+import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { saveUser } from "../API/auth";
 
+const imageHostingUrl = `https://api.imgbb.com/1/upload?expiration=600&key=${
+  import.meta.env.VITE_Image_Upload_Token
+}`;
 const Signup = () => {
+  const { createUser, updateUser } = useAuth();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  // const [uploadPicture, setUploadPicture] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordMatchingMessage, setPasswordMatchingMessage] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const { name, email, password, confirmPassword, profilePic } = data;
+
+    if (email && password === confirmPassword) {
+      const formData = new FormData();
+      formData.append("image", profilePic[0]);
+
+      fetch(imageHostingUrl, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const imgUrl = data.data.url;
+          createUser(email, password).then((result) => {
+            updateUser(name, imgUrl).then(() => {
+              saveUser(result.user);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Account created successfull",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/", { replace: true });
+            });
+          });
+        });
+    } else {
+      setError("Password & Confirm password didn't match");
+    }
+  };
+
+  const hadlePasswordMatching = (event) => {
+    if (event.target.value === password) {
+      setPasswordMatchingMessage(false);
+    } else {
+      setPasswordMatchingMessage(true);
+    }
+  };
+  // const handleImageChange = (image) => {
+  //   setUploadPicture(image.name);
+  // };
   return (
-    <div className="pt-32 bg-teal-100/60 h-screen flex items-center justify-center">
-      <form className="w-2/6 bg-white p-10 rounded-lg shasow text-center">
-        <h2 className="text-gray-700 font-semibold mb-10 text-3xl">
-          Create Account
-        </h2>
-        <div className="relative mb-4">
-          <input
-            className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
-            type="text"
-            placeholder="Your Name"
-          />
-          <FaUserAlt className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
-        </div>
-        <div className="relative mb-4">
-          <input
-            className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
-            type="text"
-            placeholder="Type Password"
-          />
-          <MdPassword className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
-        </div>
-        <div className="relative mb-4">
-          <input
-            className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
-            type="text"
-            placeholder="Confirm Password"
-          />
-          <FaKey className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
-        </div>
-        <div className="">
-          <label>
+    <div className="pt-32 bg-teal-100/60 h-screen flex flex-col items-center justify-center">
+      <div className="w-2/6 bg-white p-10 rounded-lg shasow">
+        {error && (
+          <div className="text-xl text-red-600 bg-red-50 border border-red-200 flex items-center justify-between shadow p-6 rounded-lg">
+            <div className="flex items-center justify-center gap-2">
+              <BiError className="w-14 h-14 md:w-6 md:h-6 lg:w-6 lg:h-6" />
+              <span>{error}</span>
+            </div>
+            <HiOutlineXMark
+              onClick={() => setError("")}
+              className="w-14 h-14 md:w-6 md:h-6 lg:w-6 lg:h-6 cursor-pointer"
+            />
+          </div>
+        )}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h2 className="text-gray-700 font-semibold mb-10 text-3xl text-center">
+            Create Account
+          </h2>
+          <div className="relative mb-4">
             <input
-              className="text-sm cursor-pointer w-full hidden"
+              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              type="text"
+              {...register("name")}
+              placeholder="Your Name"
+            />
+            <FaUserAlt className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+          </div>
+          <div className="relative mb-4">
+            <input
+              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              type="email"
+              {...register("email", { required: true })}
+              placeholder="Your Email"
+            />
+            <BsFillEnvelopeAtFill className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+          </div>
+          {errors.email?.type === "required" && (
+            <span className="text-red-600 text-left">Email is required</span>
+          )}
+          <div className="relative mb-4">
+            <input
+              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern:
+                  /^(?=.*[A-Z])(?=.*[!@#$%^&*()-=_+{};':",.<>/?])(?!.*\s).*$/,
+              })}
+              onBlur={(e) => setPassword(e.target.value)}
+              placeholder="Type Password"
+            />
+            <MdPassword className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <BsEyeFill
+              onClick={() => setShowPassword(!showPassword)}
+              className={`absolute top-1/4 right-4 cursor-pointer w-6 h-6 ${
+                showPassword ? "text-gray-800" : "text-gray-400"
+              }`}
+              title={showPassword ? "Hide Password" : "Show Password"}
+            />
+          </div>
+          {errors.password?.type === "required" && (
+            <span className="text-red-600 text-left">Password is required</span>
+          )}
+          {errors.password?.type === "minLength" && (
+            <span className="text-red-600 text-left">
+              Password must be at least 6 character
+            </span>
+          )}
+          {errors.password?.type === "pattern" && (
+            <span className="text-red-600 text-left">
+              Password must have one capital letter & one special character
+            </span>
+          )}
+          <div className="relative mb-4">
+            <input
+              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              type={showConfirmPassword ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: true,
+                minLength: 6,
+              })}
+              onChange={hadlePasswordMatching}
+              placeholder="Confirm Password"
+            />
+            <FaKey className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <BsEyeFill
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className={`absolute top-1/4 right-4 cursor-pointer w-6 h-6 ${
+                showConfirmPassword ? "text-gray-800" : "text-gray-400"
+              }`}
+              title={showConfirmPassword ? "Hide Password" : "Show Password"}
+            />
+          </div>
+          {passwordMatchingMessage && (
+            <span className="text-red-600 text-left">
+              Password didn&apos;t match
+            </span>
+          )}
+          <div className="">
+            <input
+              className="text-sm cursor-pointer w-full"
               type="file"
-              name="image"
+              {...register("profilePic")}
               id="image"
               accept="image/*"
-              hidden
             />
-            <div className="p-2 pl-0 border-b-2 border-dashed border-teal-400 w-full text-gray-400 text-left cursor-pointer flex items-center gap-3">
-              <BsCloudUploadFill className="w-5 h-5 text-teal-400" />
-              <span>Select Profile Picture</span>
-            </div>
-          </label>
+            {/* <label>
+              <input
+                className="text-sm cursor-pointer w-full hidden"
+                type="file"
+                {...register("profilePic")}
+                onChange={(event) => {
+                  handleImageChange(event.target.files[0]);
+                }}
+                id="image"
+                accept="image/*"
+                hidden
+              />
+              <div className="p-2 pl-0 border-b-2 border-dashed border-teal-400 w-full text-gray-400 text-left cursor-pointer flex items-center gap-3">
+                <BsCloudUploadFill className="w-5 h-5 text-teal-400" />
+                <span>
+                  {uploadPicture ? uploadPicture : "Select Profile Picture"}
+                </span>
+              </div>
+            </label> */}
+          </div>
+          <input
+            className="p-2 bg-teal-400 text-white font-semibold w-full rounded mt-10 hover:bg-teal-500 duration-300 cursor-pointer hover:tracking-widest"
+            type="submit"
+            value="Create"
+          />
+        </form>
+        <div className="text-center my-6">
+          <span className="text-gray-700 text-xl font-semibold">Or</span>
         </div>
-        <input
-          className="p-2 bg-teal-400 text-white font-semibold w-full rounded my-10"
-          type="submit"
-          value="Create"
-        />
-      </form>
+        <button className="w-full py-3 border border-teal-200 rounded-xl font-semibold flex items-center justify-center gap-4 hover:bg-teal-100/50 duration-300">
+          <img className="w-6 h-6" src={googleIcon} alt="" />
+          <span>Signup with google</span>
+        </button>
+      </div>
     </div>
   );
 };
