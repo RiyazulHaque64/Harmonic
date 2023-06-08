@@ -6,12 +6,15 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.init";
 // import axios from "axios";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -37,6 +40,10 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  // login or signup with google provider
+  const signInWithGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
   //   logout
   const logout = () => {
     localStorage.removeItem("access-token");
@@ -57,6 +64,7 @@ const AuthProvider = ({ children }) => {
       //     localStorage.removeItem("access-token");
       //     setLoading(false);
       //   }
+      setLoading(false);
     });
     return () => {
       return unsubscribe();
@@ -70,6 +78,7 @@ const AuthProvider = ({ children }) => {
     login,
     logout,
     updateUser,
+    signInWithGoogle,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

@@ -1,3 +1,9 @@
+/* Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Acme&display=swap");
+
+.logo {
+  font-family: "Acme", sans-serif;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

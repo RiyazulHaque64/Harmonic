@@ -1,10 +1,11 @@
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
+import SectionTitle from "../components/Title/SectionTitle";
 
 const Home = () => {
   return (
     <div>
       <DynamicTitleSets title="Home" />
-      <h1>This is home</h1>
+      <SectionTitle title="Add A Class" />
     </div>
   );
 };

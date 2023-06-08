@@ -11,15 +11,16 @@ import { useState } from "react";
 import googleIcon from "../assets/image/google_icon.png";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { saveUser } from "../API/auth";
+import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 
 const imageHostingUrl = `https://api.imgbb.com/1/upload?expiration=600&key=${
   import.meta.env.VITE_Image_Upload_Token
 }`;
 const Signup = () => {
-  const { createUser, updateUser } = useAuth();
+  const { createUser, updateUser, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -48,23 +49,43 @@ const Signup = () => {
         .then((res) => res.json())
         .then((data) => {
           const imgUrl = data.data.url;
-          createUser(email, password).then((result) => {
-            updateUser(name, imgUrl).then(() => {
-              saveUser(result.user);
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Account created successfull",
-                showConfirmButton: false,
-                timer: 1500,
+          createUser(email, password)
+            .then((result) => {
+              updateUser(name, imgUrl).then(() => {
+                saveUser(result.user);
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Account created successfull",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/", { replace: true });
               });
-              navigate("/", { replace: true });
+            })
+            .catch((error) => {
+              setError(error.message);
             });
-          });
         });
     } else {
       setError("Password & Confirm password didn't match");
     }
+  };
+
+  const signupWithGoogle = () => {
+    signInWithGoogle().then((result) => {
+      saveUser(result.user)
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Account signup successfull",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
+    });
   };
 
   const hadlePasswordMatching = (event) => {
@@ -78,48 +99,49 @@ const Signup = () => {
   //   setUploadPicture(image.name);
   // };
   return (
-    <div className="pt-32 bg-teal-100/60 h-screen flex flex-col items-center justify-center">
+    <div className="py-20 bg-blue-100/60 flex flex-col items-center justify-center">
+      <DynamicTitleSets title="Signup" />
       <div className="w-2/6 bg-white p-10 rounded-lg shasow">
+        <h2 className="text-gray-700 font-semibold mb-10 text-3xl text-center">
+          Create Account
+        </h2>
         {error && (
-          <div className="text-xl text-red-600 bg-red-50 border border-red-200 flex items-center justify-between shadow p-6 rounded-lg">
+          <div className="text-sm lg:text-base text-red-600 bg-red-50 border border-red-200 flex items-center justify-between shadow p-5 rounded-lg mb-4">
             <div className="flex items-center justify-center gap-2">
-              <BiError className="w-14 h-14 md:w-6 md:h-6 lg:w-6 lg:h-6" />
+              <BiError className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 xl:w-14 xl:h-14" />
               <span>{error}</span>
             </div>
             <HiOutlineXMark
               onClick={() => setError("")}
-              className="w-14 h-14 md:w-6 md:h-6 lg:w-6 lg:h-6 cursor-pointer"
+              className="w-6 h-6 md:w-8 md:h-8 lg:w-12 lg:h-12 xl:w-14 xl:h-14 cursor-pointer"
             />
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="text-gray-700 font-semibold mb-10 text-3xl text-center">
-            Create Account
-          </h2>
           <div className="relative mb-4">
             <input
-              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              className="p-2 pl-8 border-b-2 border-blue-500 w-full focus:outline-none text-gray-700"
               type="text"
               {...register("name")}
               placeholder="Your Name"
             />
-            <FaUserAlt className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <FaUserAlt className="w-5 h-5 text-blue-500 absolute left-0 top-1/2 transform -translate-y-1/2" />
           </div>
           <div className="relative mb-4">
             <input
-              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              className="p-2 pl-8 border-b-2 border-blue-500 w-full focus:outline-none text-gray-700"
               type="email"
               {...register("email", { required: true })}
               placeholder="Your Email"
             />
-            <BsFillEnvelopeAtFill className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <BsFillEnvelopeAtFill className="w-5 h-5 text-blue-500 absolute left-0 top-1/2 transform -translate-y-1/2" />
           </div>
           {errors.email?.type === "required" && (
             <span className="text-red-600 text-left">Email is required</span>
           )}
           <div className="relative mb-4">
             <input
-              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              className="p-2 pl-8 border-b-2 border-blue-500 w-full focus:outline-none text-gray-700"
               type={showPassword ? "text" : "password"}
               {...register("password", {
                 required: true,
@@ -130,7 +152,7 @@ const Signup = () => {
               onBlur={(e) => setPassword(e.target.value)}
               placeholder="Type Password"
             />
-            <MdPassword className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <MdPassword className="w-5 h-5 text-blue-500 absolute left-0 top-1/2 transform -translate-y-1/2" />
             <BsEyeFill
               onClick={() => setShowPassword(!showPassword)}
               className={`absolute top-1/4 right-4 cursor-pointer w-6 h-6 ${
@@ -154,7 +176,7 @@ const Signup = () => {
           )}
           <div className="relative mb-4">
             <input
-              className="p-2 pl-8 border-b-2 border-teal-400 w-full focus:outline-none text-gray-700"
+              className="p-2 pl-8 border-b-2 border-blue-500 w-full focus:outline-none text-gray-700"
               type={showConfirmPassword ? "text" : "password"}
               {...register("confirmPassword", {
                 required: true,
@@ -163,7 +185,7 @@ const Signup = () => {
               onChange={hadlePasswordMatching}
               placeholder="Confirm Password"
             />
-            <FaKey className="w-5 h-5 text-teal-400 absolute left-0 top-1/2 transform -translate-y-1/2" />
+            <FaKey className="w-5 h-5 text-blue-500 absolute left-0 top-1/2 transform -translate-y-1/2" />
             <BsEyeFill
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className={`absolute top-1/4 right-4 cursor-pointer w-6 h-6 ${
@@ -173,7 +195,7 @@ const Signup = () => {
             />
           </div>
           {passwordMatchingMessage && (
-            <span className="text-red-600 text-left">
+            <span className="text-red-600 text-left mb-2">
               Password didn&apos;t match
             </span>
           )}
@@ -206,15 +228,24 @@ const Signup = () => {
             </label> */}
           </div>
           <input
-            className="p-2 bg-teal-400 text-white font-semibold w-full rounded mt-10 hover:bg-teal-500 duration-300 cursor-pointer hover:tracking-widest"
+            className="p-2 bg-blue-500 text-white font-semibold w-full rounded mt-10 hover:bg-blue-600 duration-300 cursor-pointer hover:tracking-widest"
             type="submit"
             value="Create"
           />
         </form>
-        <div className="text-center my-6">
+        <p className="mt-2">
+          Already have an account? Please{" "}
+          <Link className="text-blue-600 hover:underline" to="/login">
+            login
+          </Link>
+        </p>
+        <div className="text-center mt-2 mb-4">
           <span className="text-gray-700 text-xl font-semibold">Or</span>
         </div>
-        <button className="w-full py-3 border border-teal-200 rounded-xl font-semibold flex items-center justify-center gap-4 hover:bg-teal-100/50 duration-300">
+        <button
+          onClick={signupWithGoogle}
+          className="w-full py-3 border border-blue-200 rounded-xl font-semibold flex items-center justify-center gap-4 hover:bg-teal-100/50 duration-300"
+        >
           <img className="w-6 h-6" src={googleIcon} alt="" />
           <span>Signup with google</span>
         </button>
