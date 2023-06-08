@@ -6,6 +6,7 @@ const MyClasses = () => {
     <div>
       <DynamicTitleSets title="My Classes" />
       <SectionTitle title="My Classes" />
+      <h2>myClass.length</h2>
     </div>
   );
 };
