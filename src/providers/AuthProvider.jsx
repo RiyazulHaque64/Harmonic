@@ -10,7 +10,6 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { app } from "../firebase/firebase.init";
-import axios from "axios";
 // import axios from "axios";
 
 export const AuthContext = createContext(null);
@@ -54,19 +53,20 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser?.email) {
-        axios
-          .post(`${import.meta.env.VITE_SERVER_BASE_URL}/jwt`, {
-            email: currentUser?.email,
-          })
-          .then((data) => {
-            localStorage.setItem("access-token", data.data);
-            setLoading(false);
-          });
-      } else {
-        localStorage.removeItem("access-token");
-        setLoading(false);
-      }
+      // if (currentUser?.email) {
+      //   axios
+      //     .post(`${import.meta.env.VITE_SERVER_BASE_URL}/jwt`, {
+      //       email: currentUser?.email,
+      //     })
+      //     .then((data) => {
+      //       localStorage.setItem("access-token", data.data);
+      //       setLoading(false);
+      //     });
+      // } else {
+      //   localStorage.removeItem("access-token");
+      //   setLoading(false);
+      // }
+      setLoading(false);
     });
     return () => {
       return unsubscribe();

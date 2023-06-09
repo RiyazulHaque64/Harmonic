@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const AXIOS = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_BASE_URL}`,
+  baseURL: import.meta.env.VITE_SERVER_BASE_URL,
 });
 
 const useAxiosSecure = () => {
@@ -12,10 +12,11 @@ const useAxiosSecure = () => {
   const navigate = useNavigate();
   useEffect(() => {
     // Intercept request
+
     AXIOS.interceptors.request.use((config) => {
-      const token = `Bearer ${localStorage.getItem("access-token")}`;
-      if (token) {
-        config.headers.Authorization = token;
+      const accessToken = `Bearer ${localStorage.getItem("access-token")}`;
+      if (accessToken) {
+        config.headers.token = accessToken;
       }
       return config;
     });

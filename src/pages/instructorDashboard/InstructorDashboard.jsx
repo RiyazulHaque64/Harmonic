@@ -113,7 +113,7 @@ const InstructorDashboard = () => {
           </nav>
         </div>
       </div>
-      <div className="p-10 text-2xl font-semibold flex-1 h-screen">
+      <div className="p-10 flex-1 h-screen">
         <Outlet />
       </div>
     </div>

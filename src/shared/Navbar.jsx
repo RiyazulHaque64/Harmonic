@@ -23,13 +23,19 @@ const Navbar = () => {
               <NavLink>Instructors</NavLink>
             </li>
             <li className="text-white font-semibold text-lg">
-              <NavLink>Classes</NavLink>
+              <NavLink to="/classes">Classes</NavLink>
             </li>
 
             {user ? (
               <>
                 <li className="text-white font-semibold text-lg">
-                  <NavLink to="/student/dashboard">Dashboard</NavLink>
+                  <NavLink to="/instructor/dashboard">IDashboard</NavLink>
+                </li>
+                <li className="text-white font-semibold text-lg">
+                  <NavLink to="/student/dashboard">SDashboard</NavLink>
+                </li>
+                <li className="text-white font-semibold text-lg">
+                  <NavLink to="/admin/dashboard">ADashboard</NavLink>
                 </li>
                 <li className="text-white font-semibold text-lg">
                   <Button

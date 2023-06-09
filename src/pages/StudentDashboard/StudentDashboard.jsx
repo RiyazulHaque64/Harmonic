@@ -2,22 +2,22 @@ import { useState } from "react";
 import { BiChevronsLeft } from "react-icons/bi";
 import { FaFolderOpen, FaHome } from "react-icons/fa";
 import { MdBookmarks } from "react-icons/md";
-import { Link } from "react-router-dom";
-import logo from "../assets/image/logo1.png";
-import useAuth from "../hooks/useAuth";
+import { Link, Outlet } from "react-router-dom";
+import logo from "../../assets/image/logo1.png";
+import useAuth from "../../hooks/useAuth";
 
-const StudentDashboard = () => {
+const InstructorDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { user } = useAuth();
   return (
-    <div className="flex bg-gray-100">
+    <div className="flex">
       <div
         className={`${
           sidebarOpen ? "w-72 p-7" : "w-20 p-2"
-        } h-screen bg-white shadow relative duration-200 `}
+        } h-screen bg-blue-500 shadow relative duration-200 `}
       >
         <BiChevronsLeft
-          className={`w-6 h-6 hover:text-blue-500 hover:border-blue-500 duration-200 absolute right-0 top-8 transform translate-x-1/2 cursor-pointer border-2 border-gray-100 bg-white rounded-full shadow-lg ${
+          className={`w-6 h-6 hover:text-blue-500 border-blue-600 hover:border-blue-500 duration-200 absolute right-0 top-8 transform translate-x-1/2 cursor-pointer border-2 bg-white rounded-full shadow-lg ${
             sidebarOpen || "rotate-180"
           }`}
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -25,13 +25,14 @@ const StudentDashboard = () => {
         <div>
           <div className="mb-5">
             <Link to="/" className="flex gap-2 items-center justify-center">
+              {" "}
               <img
                 className={`${sidebarOpen ? "w-10" : "w-12"}`}
                 src={logo}
                 alt="Logo"
               />
               <span
-                className={`logo text-3xl font-semibold uppercase text-blue-500 ${
+                className={`logo text-3xl font-semibold uppercase text-white ${
                   sidebarOpen || "hidden"
                 }`}
               >
@@ -48,7 +49,7 @@ const StudentDashboard = () => {
               alt="profile picture"
             />
             <h4
-              className={`text-gray-700 font-semibold ${
+              className={`text-gray-300 font-semibold ${
                 sidebarOpen ? "text-xl" : "text-xs"
               }`}
             >
@@ -57,16 +58,16 @@ const StudentDashboard = () => {
           </div>
           <nav>
             <ul>
-              <li className="group p-2 hover:bg-blue-500 duration-200 rounded">
+              <li className="group p-2 hover:bg-blue-600 duration-200 rounded">
                 <Link
                   to="/"
                   className={`flex items-center ${
                     sidebarOpen ? "flex-row gap-2" : "flex-col text-center"
                   }`}
                 >
-                  <FaHome className="w-5 h-5 text-gray-700 group-hover:text-white duration-200" />
+                  <FaHome className="w-5 h-5 text-gray-200 group-hover:text-white duration-200" />
                   <span
-                    className={`text-gray-700 group-hover:text-white duration-200 ${
+                    className={`text-gray-200 group-hover:text-white duration-200 ${
                       sidebarOpen ? "text-base" : "text-xs"
                     }`}
                   >
@@ -74,15 +75,16 @@ const StudentDashboard = () => {
                   </span>
                 </Link>
               </li>
-              <li className="group p-2 hover:bg-blue-500 duration-200 rounded">
+              <li className="group p-2 hover:bg-blue-600 duration-200 rounded">
                 <Link
+                  to="/student/dashboard/selectedClasses"
                   className={`flex  items-center ${
                     sidebarOpen ? "flex-row gap-2" : "flex-col text-center"
                   }`}
                 >
-                  <FaFolderOpen className="w-5 h-5 text-gray-700 group-hover:text-white duration-200" />
+                  <FaFolderOpen className="w-5 h-5 text-gray-200 group-hover:text-white duration-200" />
                   <span
-                    className={`text-gray-700 group-hover:text-white duration-200 ${
+                    className={`text-gray-200 group-hover:text-white duration-200 ${
                       sidebarOpen ? "text-base" : "text-xs"
                     }`}
                   >
@@ -90,15 +92,16 @@ const StudentDashboard = () => {
                   </span>
                 </Link>
               </li>
-              <li className="group p-2 hover:bg-blue-500 duration-200 rounded">
+              <li className="group p-2 hover:bg-blue-600 duration-200 rounded">
                 <Link
+                  to="/student/dashboard/enrolledClasses"
                   className={`flex  items-center ${
                     sidebarOpen ? "flex-row gap-2" : "flex-col text-center"
                   }`}
                 >
-                  <MdBookmarks className="w-5 h-5 text-gray-700 group-hover:text-white duration-200" />
+                  <MdBookmarks className="w-5 h-5 text-gray-200 group-hover:text-white duration-200" />
                   <span
-                    className={`text-gray-700 group-hover:text-white duration-200 ${
+                    className={`text-gray-200 group-hover:text-white duration-200 ${
                       sidebarOpen ? "text-base" : "text-xs"
                     }`}
                   >
@@ -110,11 +113,11 @@ const StudentDashboard = () => {
           </nav>
         </div>
       </div>
-      <div className="p-6 text-2xl font-semibold flex-1 h-screen">
-        <h1>Home Page</h1>
+      <div className="p-10 flex-1 h-screen">
+        <Outlet />
       </div>
     </div>
   );
 };
 
-export default StudentDashboard;
+export default InstructorDashboard;

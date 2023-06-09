@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 
-const imageHostingUrl = `https://api.imgbb.com/1/upload?expiration=600&key=${
+const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
 }`;
 
@@ -42,6 +42,9 @@ const AddClass = () => {
           instructorEmail,
           price,
           seats,
+          status: "pending",
+          feedback: "",
+          enrolledStudent: 0,
         };
         addClass(classInfo).then((data) => {
           if (data.data?.insertedId) {
@@ -53,6 +56,8 @@ const AddClass = () => {
               showConfirmButton: false,
               timer: 1500,
             });
+            form.reset();
+            setImageName("");
           }
         });
         setLoading(false);

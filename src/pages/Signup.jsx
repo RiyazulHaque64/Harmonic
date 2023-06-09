@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 import { saveUser } from "../API/auth";
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 
-const imageHostingUrl = `https://api.imgbb.com/1/upload?expiration=600&key=${
+const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
 }`;
 const Signup = () => {
