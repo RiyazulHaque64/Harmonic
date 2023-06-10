@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import "./CheckoutForm.css";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const CheckoutForm = ({ closeModal, payingAmount }) => {
   const { user } = useAuth();
@@ -10,7 +11,14 @@ const CheckoutForm = ({ closeModal, payingAmount }) => {
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (payingAmount) {
+      axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/create-payment-intent`,
+        { payingAmount }
+      );
+    }
+  }, [payingAmount]);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
