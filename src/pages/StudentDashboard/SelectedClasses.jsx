@@ -196,7 +196,7 @@ const SelectedClasses = () => {
                       <Elements stripe={stripePromise}>
                         <CheckoutForm
                           closeModal={closeModal}
-                          payingAmount={singleClassInfo}
+                          singleClassInfo={singleClassInfo}
                         />
                       </Elements>
                     </div>

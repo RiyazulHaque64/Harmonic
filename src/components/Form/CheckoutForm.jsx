@@ -3,6 +3,9 @@ import "./CheckoutForm.css";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import { updateClass } from "../../API/class";
+import Swal from "sweetalert2";
+import { deleteSelectedClasses } from "../../API/select";
 
 const CheckoutForm = ({ closeModal, singleClassInfo }) => {
   const { user } = useAuth();
@@ -19,7 +22,6 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
         })
         .then((data) => {
           setClientSecret(data.data.clientSecret);
-          console.log(data.data.clientSecret);
         });
     }
   }, [singleClassInfo]);
@@ -43,7 +45,6 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
       setCardError(error.message);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
@@ -58,15 +59,10 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
           },
         },
       });
-    // .then(function (result) {
-    //   // Handle result.error or result.paymentIntent
-    // });
 
     if (confirmError) {
-      console.log("[error]", confirmError);
       setCardError(confirmError.message);
     } else {
-      console.log("[paymentIntent]", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         const paymentInfo = {
           ...singleClassInfo,
@@ -78,7 +74,30 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
             `${import.meta.env.VITE_SERVER_BASE_URL}/enrolledClass`,
             paymentInfo
           )
-          .then((res) => console.log(res.data));
+          .then((res) => {
+            if (res.data.insertedId) {
+              updateClass(
+                { seats: singleClassInfo.seats - 1 },
+                singleClassInfo.classId
+              ).then((res) => {
+                console.log(res.data);
+                deleteSelectedClasses(singleClassInfo._id).then((data) => {
+                  console.log(data.data);
+                  if (data.data.deletedCount > 0) {
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "You have successfully enrolled in this class",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
+                });
+
+                closeModal();
+              });
+            }
+          });
       }
     }
   };
@@ -102,7 +121,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
             },
           }}
         />
-
+        <p className="text-red-500 mb-6">{cardError}</p>
         <div className="flex items-center gap-2 justify-end">
           <button
             type="button"
@@ -120,7 +139,6 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
           </button>
         </div>
       </form>
-      <p className="text-red-500">{cardError}</p>
     </>
   );
 };
