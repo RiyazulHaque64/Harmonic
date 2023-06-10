@@ -10,7 +10,7 @@ import { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CheckoutForm from "../../components/Form/CheckOutForm";
+import CheckoutForm from "../../components/Form/CheckoutForm";
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_Payment_Gateway_PK}`);
 
@@ -196,7 +196,7 @@ const SelectedClasses = () => {
                       <Elements stripe={stripePromise}>
                         <CheckoutForm
                           closeModal={closeModal}
-                          payingAmount={singleClassInfo.price}
+                          payingAmount={singleClassInfo}
                         />
                       </Elements>
                     </div>
