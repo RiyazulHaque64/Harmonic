@@ -13,10 +13,14 @@ const CheckoutForm = ({ closeModal, payingAmount }) => {
 
   useEffect(() => {
     if (payingAmount) {
-      axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/create-payment-intent`,
-        { payingAmount }
-      );
+      axios
+        .post(`${import.meta.env.VITE_SERVER_BASE_URL}/create-payment-intent`, {
+          payingAmount,
+        })
+        .then((data) => {
+          setClientSecret(data.data.clientSecret);
+          console.log(data.data.clientSecret);
+        });
     }
   }, [payingAmount]);
   const handleSubmit = async (event) => {
