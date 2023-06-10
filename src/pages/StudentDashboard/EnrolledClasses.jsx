@@ -11,7 +11,6 @@ const EnrolledClasses = () => {
     enabled: !loading && !!user?.email,
     queryFn: () => getEnrolledClasses(user),
   });
-  console.log(enrolledClasses);
   return (
     <div>
       <DynamicTitleSets title="Enrolled Classes" />

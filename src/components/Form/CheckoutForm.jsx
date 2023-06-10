@@ -67,7 +67,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
         const paymentInfo = {
           ...singleClassInfo,
           transactionId: paymentIntent.id,
-          date: new Date(),
+          date: new Date().getTime(),
         };
         axios
           .post(
