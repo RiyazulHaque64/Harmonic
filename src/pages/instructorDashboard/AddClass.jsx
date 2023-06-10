@@ -43,7 +43,7 @@ const AddClass = () => {
           price,
           seats,
           status: "pending",
-          feedback: "",
+          feedback: "No Feedback",
           enrolledStudent: 0,
         };
         addClass(classInfo).then((data) => {

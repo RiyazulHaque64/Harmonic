@@ -1,14 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import { getClass } from "../API/class";
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 import SectionTitle from "../components/Title/SectionTitle";
 import ClassCard from "../components/ProductCard/ClassCard";
+import useGetClasses from "../hooks/useGetClasses";
 
 const Classes = () => {
-  const { data: allClasses } = useQuery({
-    queryKey: ["allClass"],
-    queryFn: getClass,
-  });
+  const [allClasses, refetch] = useGetClasses();
+
   return (
     <div className="py-10 w-10/12 mx-auto">
       <DynamicTitleSets title="All Classes" />
@@ -18,7 +15,11 @@ const Classes = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6 2xl:gap-8">
             {allClasses.map((singleClass) => (
-              <ClassCard key={singleClass._id} classInfo={singleClass} />
+              <ClassCard
+                key={singleClass._id}
+                classInfo={singleClass}
+                refetch={refetch}
+              />
             ))}
           </div>
         </>

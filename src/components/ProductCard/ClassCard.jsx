@@ -2,8 +2,9 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addToSelect } from "../../API/select";
+import { updateClass } from "../../API/class";
 
-const ClassCard = ({ classInfo }) => {
+const ClassCard = ({ classInfo, refetch }) => {
   const { user } = useAuth();
   const {
     _id,
@@ -23,12 +24,17 @@ const ClassCard = ({ classInfo }) => {
         classId: _id,
         className,
         instructorEmail,
+        instructorName,
+        imgUrl,
         price,
+        seats,
         studentEmail: user.email,
       };
       addToSelect(selectedClassInfo).then((data) => {
         if (data.data.insertedId) {
-          // refetch();
+          updateClass({ seats: seats - 1 }, _id).then(() => {
+            refetch();
+          });
           Swal.fire({
             position: "center",
             icon: "success",
