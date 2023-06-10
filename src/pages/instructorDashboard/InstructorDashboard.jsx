@@ -14,7 +14,7 @@ const InstructorDashboard = () => {
       <div
         className={`${
           sidebarOpen ? "w-72 p-7" : "w-20 p-2"
-        } h-screen bg-blue-500 shadow relative duration-200 `}
+        } h-screen bg-blue-500 shadow fixed duration-200 `}
       >
         <BiChevronsLeft
           className={`w-6 h-6 hover:text-blue-500 border-blue-600 hover:border-blue-500 duration-200 absolute right-0 top-8 transform translate-x-1/2 cursor-pointer border-2 bg-white rounded-full shadow-lg ${
@@ -113,7 +113,9 @@ const InstructorDashboard = () => {
           </nav>
         </div>
       </div>
-      <div className="p-10 flex-1 h-screen">
+      <div
+        className={`p-10 flex-1 h-screen ${sidebarOpen ? "ml-72" : "ml-20"}`}
+      >
         <Outlet />
       </div>
     </div>

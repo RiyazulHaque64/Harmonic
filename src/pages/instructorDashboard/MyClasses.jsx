@@ -181,7 +181,12 @@ const MyClasses = () => {
                   <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
                     <span>{singleClass.enrolledStudent}</span>
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                  <td
+                    className={`p-1 text-[10px] md:text-base font-semibold md:p-2 text-center text-orange-500 ${
+                      (singleClass.status === "approved" && "text-green-600") ||
+                      (singleClass.status === "denied" && "text-red-600")
+                    }`}
+                  >
                     {singleClass.status}
                   </td>
                   <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">

@@ -1,11 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { getClass } from "../API/class";
+import { getApprovedClass, getClass } from "../API/class";
 
-const useGetClasses = () => {
+export const useGetClasses = () => {
   const { data: allClasses, refetch } = useQuery({
     queryKey: ["allClass"],
     queryFn: getClass,
   });
   return [allClasses, refetch];
 };
-export default useGetClasses;
+
+export const useGetAprovedClasses = () => {
+  const { data: allClasses, refetch } = useQuery({
+    queryKey: ["allAprovedClass"],
+    queryFn: getApprovedClass,
+  });
+  return [allClasses, refetch];
+};

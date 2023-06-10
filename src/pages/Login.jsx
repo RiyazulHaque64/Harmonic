@@ -50,7 +50,13 @@ const Login = () => {
 
   const loginWithGoogle = () => {
     signInWithGoogle().then((result) => {
-      saveUser(result.user);
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        photoUrl: result.user.photoURL,
+        role: "student",
+      };
+      saveUser(userInfo);
       Swal.fire({
         position: "center",
         icon: "success",

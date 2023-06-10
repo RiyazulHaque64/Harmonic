@@ -52,7 +52,13 @@ const Signup = () => {
           createUser(email, password)
             .then((result) => {
               updateUser(name, imgUrl).then(() => {
-                saveUser(result.user);
+                const userInfo = {
+                  name: result.user.displayName,
+                  email: result.user.email,
+                  photoUrl: result.user.photoURL,
+                  role: "student",
+                };
+                saveUser(userInfo);
                 Swal.fire({
                   position: "center",
                   icon: "success",
@@ -74,7 +80,13 @@ const Signup = () => {
 
   const signupWithGoogle = () => {
     signInWithGoogle().then((result) => {
-      saveUser(result.user)
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+        photoUrl: result.user.photoURL,
+        role: "student",
+      };
+      saveUser(userInfo)
         .then((data) => console.log(data))
         .catch((error) => console.log(error));
       Swal.fire({

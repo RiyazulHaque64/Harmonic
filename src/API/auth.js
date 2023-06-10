@@ -1,15 +1,20 @@
-export const saveUser = (user) => {
-  const currentUser = {
-    name: user.displayName,
-    email: user.email,
-    role: "student",
-  };
+import axios from "axios";
 
-  fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/users/${user?.email}`, {
-    method: "PUT",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(currentUser),
-  });
+export const saveUser = (userInfo) => {
+  const res = fetch(
+    `${import.meta.env.VITE_SERVER_BASE_URL}/users/${userInfo?.email}`,
+    {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    }
+  );
+  return res;
+};
+
+export const getUsers = async () => {
+  const res = await axios.get(`${import.meta.env.VITE_SERVER_BASE_URL}/users`);
+  return res.data;
 };

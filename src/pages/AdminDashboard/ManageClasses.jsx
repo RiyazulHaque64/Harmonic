@@ -1,7 +1,7 @@
 import { updateClass } from "../../API/class";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
-import useGetClasses from "../../hooks/useGetClasses";
+import { useGetClasses } from "../../hooks/useGetClasses";
 import { ImSpinner9 } from "react-icons/im";
 import { Dialog, Transition } from "@headlessui/react";
 import { useState, Fragment } from "react";
@@ -67,33 +67,29 @@ const ManageClasses = () => {
     <div>
       <DynamicTitleSets title="Manage Classes" />
       <SectionTitle title="Manage Classes" />
-      <div className="w-full lg:w-11/12 2xl:w-10/12 mx-auto">
+      <div className="w-full 2xl:w-10/12 mx-auto">
         {allClasses && Array.isArray(allClasses) && allClasses.length > 0 ? (
           <table className="border w-full text-center">
             <thead className="bg-gray-100 text-gray-800">
               <tr className="border border-gray-100">
-                <th className="border p-1 text-[12px] md:text-base md:p-2">
-                  #
-                </th>
-                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                <th className="border p-1 text-sm xl:text-base md:p-2">#</th>
+                <th className="border p-1 text-sm xl:text-base md:p-2">
                   Image
                 </th>
-                <th className="border p-1 text-[12px] md:text-base md:p-2">
-                  Name
-                </th>
-                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                <th className="border p-1 text-sm xl:text-base md:p-2">Name</th>
+                <th className="border p-1 text-sm xl:text-base md:p-2">
                   Price
                 </th>
-                <th className="border p-1 text-sm md:text-base md:p-2">
+                <th className="border p-1 text-sm xl:text-base md:p-2">
                   Instructor Name
                 </th>
-                <th className="border p-1 text-sm md:text-base md:p-2">
+                <th className="border p-1 text-sm xl:text-base md:p-2">
                   Instructor Email
                 </th>
-                <th className="border p-1 text-sm md:text-base md:p-2">
-                  Available Seats
+                <th className="border p-1 text-sm xl:text-base md:p-2">
+                  Seats
                 </th>
-                <th className="border p-1 text-sm md:text-base md:p-2">
+                <th className="border p-1 text-sm xl:text-base md:p-2">
                   Status/Approval
                 </th>
               </tr>
@@ -104,32 +100,32 @@ const ManageClasses = () => {
                   <th className=" border-r text-sm p-1 text-center text-gray-700">
                     {index + 1}
                   </th>
-                  <td className="p-2">
+                  <td className="p-1">
                     <img
                       className="w-8 md:w-12 h-8 lg:h-12 mx-auto"
                       src={singleClass.imgUrl}
                       alt=""
                     />
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-gray-700">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     {singleClass.className}
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     ${singleClass.price}
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     <span>{singleClass.instructorName}</span>
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     {singleClass.instructorEmail}
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     {singleClass.seats}
                   </td>
-                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                  <td className="p-1 text-[10px] md:text-sm xl:text-base md:p-2 text-gray-700">
                     <button
                       onClick={() => handleApproval(singleClass._id)}
-                      className={`p-2 font-semibold duration-200 border-r border-gray-400 rounded-ss-lg rounded-es-lg disabled:cursor-not-allowed ${
+                      className={`p-2 text-sm 2xl:text-base font-semibold duration-200 border-r border-gray-400 rounded-ss-lg rounded-es-lg disabled:cursor-not-allowed ${
                         singleClass.status === "approved"
                           ? "bg-green-500 text-white hover:bg-green-500 border-none"
                           : "bg-gray-300 text-gray-700 hover:bg-gray-400"
@@ -141,7 +137,7 @@ const ManageClasses = () => {
                         : "Approve"}
                     </button>
                     <button
-                      className={`p-2 font-semibold  duration-200 border-r border-gray-400 disabled:cursor-not-allowed ${
+                      className={`p-2 text-sm 2xl:text-base font-semibold  duration-200 border-r border-gray-400 disabled:cursor-not-allowed ${
                         singleClass.status === "denied"
                           ? "bg-red-500 text-white hover:bg-red-500"
                           : "bg-gray-300 text-gray-700 hover:bg-gray-400"
@@ -152,12 +148,12 @@ const ManageClasses = () => {
                       {singleClass.status === "denied" ? "Denied" : "Deny"}
                     </button>
                     <button
-                      className={`p-2  font-semibold duration-200 rounded-ee-lg rounded-se-lg disabled:cursor-not-allowed ${
+                      className={`p-2 text-sm 2xl:text-base  font-semibold duration-200 rounded-ee-lg rounded-se-lg disabled:cursor-not-allowed ${
                         singleClass.status === "pending"
-                          ? "bg-orange-500 text-white hover:bg-orange-500"
-                          : "bg-gray-300 text-gray-700 hover:bg-gray-400"
+                          ? "bg-orange-500 text-white"
+                          : "bg-gray-300 text-gray-700"
                       }`}
-                      disabled={singleClass.status === "pending"}
+                      disabled={true}
                     >
                       Pending
                     </button>

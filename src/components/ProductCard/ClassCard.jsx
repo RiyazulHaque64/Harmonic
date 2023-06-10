@@ -61,9 +61,9 @@ const ClassCard = ({ classInfo, refetch }) => {
     }
   };
   return (
-    <div className="border rounded">
+    <div className={`border rounded-lg ${seats === 0 && "bg-red-500"}`}>
       <img
-        className="h-48 xl:h-56 w-full object-cover rounded"
+        className="h-48 xl:h-56 w-full object-cover rounded-lg"
         src={imgUrl}
         alt="Course Image"
       />
@@ -72,16 +72,19 @@ const ClassCard = ({ classInfo, refetch }) => {
         <h4 className="text-gray-800 mb-2">{instructorName}</h4>
         <p className="text-orange-500 font-bold text-2xl">${price}</p>
       </div>
-      <div className="flex items-center justify-between bg-blue-400 w-full">
-        <div className="w-1/2 text-center border-r border-blue-300 p-4">
-          <p className="text-white font-semibold">
+      <div className="flex items-center justify-between bg-blue-400 w-full rounded-ee-lg rounded-es-lg">
+        <div className="w-1/2 text-center border-r border-blue-300">
+          <p className="text-white font-semibold p-1 lg:p-3">
             Only <span>{seats}</span> Seats
           </p>
         </div>
-        <div className="w-1/2 text-center p-2 group">
+        <div className="w-1/2 text-center">
           <button
             onClick={handleClassSelect}
-            className="font-semibold text-white cursor-pointer duration-200 group-hover:tracking-widest"
+            className={`font-semibold text-white cursor-pointer duration-200  disabled:cursor-not-allowed w-full p-1 lg:p-3 ${
+              seats === 0 ? "hover:tracking-normal" : "hover:tracking-widest"
+            }`}
+            disabled={seats === 0}
           >
             Select
           </button>

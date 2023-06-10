@@ -1,10 +1,10 @@
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 import SectionTitle from "../components/Title/SectionTitle";
 import ClassCard from "../components/ProductCard/ClassCard";
-import useGetClasses from "../hooks/useGetClasses";
+import { useGetAprovedClasses } from "../hooks/useGetClasses";
 
 const Classes = () => {
-  const [allClasses, refetch] = useGetClasses();
+  const [allClasses, refetch] = useGetAprovedClasses();
 
   return (
     <div className="py-10 w-10/12 mx-auto">

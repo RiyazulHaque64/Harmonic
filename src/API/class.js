@@ -6,6 +6,14 @@ export const getClass = async () => {
   return data;
 };
 
+export const getApprovedClass = async () => {
+  const res = await fetch(
+    `${import.meta.env.VITE_SERVER_BASE_URL}/classes/approved`
+  );
+  const data = await res.json();
+  return data;
+};
+
 export const addClass = (classInfo) => {
   const res = axios.post(
     `${import.meta.env.VITE_SERVER_BASE_URL}/classes`,
