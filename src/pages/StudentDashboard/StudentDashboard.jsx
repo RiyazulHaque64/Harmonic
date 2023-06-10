@@ -109,6 +109,23 @@ const InstructorDashboard = () => {
                   </span>
                 </Link>
               </li>
+              <li className="group p-2 hover:bg-blue-600 duration-200 rounded">
+                <Link
+                  to="/student/dashboard/paymentHistory"
+                  className={`flex  items-center ${
+                    sidebarOpen ? "flex-row gap-2" : "flex-col text-center"
+                  }`}
+                >
+                  <MdBookmarks className="w-5 h-5 text-gray-200 group-hover:text-white duration-200" />
+                  <span
+                    className={`text-gray-200 group-hover:text-white duration-200 ${
+                      sidebarOpen ? "text-base" : "text-xs"
+                    }`}
+                  >
+                    Payment History
+                  </span>
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

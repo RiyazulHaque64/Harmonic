@@ -6,7 +6,7 @@ import getEnrolledClasses from "../../API/enrolledClasses";
 
 const EnrolledClasses = () => {
   const { user, loading } = useAuth();
-  const { data: enrolledClasses, refetch } = useQuery({
+  const { data: enrolledClasses } = useQuery({
     queryKey: ["myClass", user?.email],
     enabled: !loading && !!user?.email,
     queryFn: () => getEnrolledClasses(user),
@@ -16,6 +16,68 @@ const EnrolledClasses = () => {
     <div>
       <DynamicTitleSets title="Enrolled Classes" />
       <SectionTitle title="My Enrolled Classes" />
+      <div className="w-full lg:w-11/12 2xl:w-9/12 mx-auto">
+        {enrolledClasses &&
+        Array.isArray(enrolledClasses) &&
+        enrolledClasses.length > 0 ? (
+          <table className="border w-full text-center">
+            <thead className="bg-gray-100 text-gray-800">
+              <tr className="border border-gray-100">
+                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                  #
+                </th>
+                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                  Image
+                </th>
+                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                  Name
+                </th>
+                <th className="border p-1 text-[12px] md:text-base md:p-2">
+                  Price
+                </th>
+                <th className="border p-1 text-sm md:text-base md:p-2">
+                  Instructor
+                </th>
+                <th className="border p-1 text-sm md:text-base md:p-2">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {enrolledClasses.map((singleClass, index) => (
+                <tr className="border" key={singleClass._id}>
+                  <th className=" border-r text-sm p-1 text-center text-gray-700">
+                    {index + 1}
+                  </th>
+                  <td className="p-2">
+                    <img
+                      className="w-8 md:w-12 h-8 lg:h-12 mx-auto"
+                      src={singleClass.imgUrl}
+                      alt=""
+                    />
+                  </td>
+                  <td className="p-1 text-[10px] md:text-base md:p-2 text-gray-700">
+                    {singleClass.className}
+                  </td>
+                  <td className="p-1 text-[10px] md:text-base md:p-2">
+                    ${singleClass.price}
+                  </td>
+                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                    <span>{singleClass.instructorName}</span>
+                  </td>
+                  <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
+                    <span className="bg-green-500 px-4 py-1 rounded text-white font-semibold">
+                      Paid
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h2>No Data found</h2>
+        )}
+      </div>
     </div>
   );
 };
