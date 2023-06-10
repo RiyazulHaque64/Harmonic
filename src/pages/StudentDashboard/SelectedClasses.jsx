@@ -38,11 +38,6 @@ const SelectedClasses = () => {
       if (result.isConfirmed) {
         deleteSelectedClasses(singleClass._id).then((data) => {
           if (data.data.deletedCount > 0) {
-            // console.log(singleClass);
-            // updateClass(
-            //   { seats: singleClass.seats - 1 },
-            //   singleClass.classId
-            // ).then((data) => console.log(data));
             Swal.fire({
               position: "center",
               icon: "success",
@@ -197,6 +192,7 @@ const SelectedClasses = () => {
                         <CheckoutForm
                           closeModal={closeModal}
                           singleClassInfo={singleClassInfo}
+                          refetch={refetch}
                         />
                       </Elements>
                     </div>

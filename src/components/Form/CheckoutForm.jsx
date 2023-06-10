@@ -7,7 +7,7 @@ import { updateClass } from "../../API/class";
 import Swal from "sweetalert2";
 import { deleteSelectedClasses } from "../../API/select";
 
-const CheckoutForm = ({ closeModal, singleClassInfo }) => {
+const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -91,6 +91,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo }) => {
                       showConfirmButton: false,
                       timer: 1500,
                     });
+                    refetch();
                   }
                 });
 
