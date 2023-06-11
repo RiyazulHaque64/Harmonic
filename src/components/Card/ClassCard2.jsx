@@ -1,7 +1,6 @@
 const ClassCard2 = ({ classInfo }) => {
   const { imgUrl, className, instructorName, price, enrolledStudent } =
     classInfo;
-  console.log(classInfo);
   return (
     <div className="bg-gray-200 shadow-xl rounded">
       <img className="w-full h-64 rounded object-cover" src={imgUrl} alt="" />

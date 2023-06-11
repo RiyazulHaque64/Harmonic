@@ -43,6 +43,7 @@ const Signup = () => {
       formData.append("image", profilePic[0]);
 
       fetch(imageHostingUrl, {
+        mode: "no-cors",
         method: "POST",
         body: formData,
       })
@@ -72,6 +73,9 @@ const Signup = () => {
             .catch((error) => {
               setError(error.message);
             });
+        })
+        .catch((error) => {
+          setError(error.message);
         });
     } else {
       setError("Password & Confirm password didn't match");

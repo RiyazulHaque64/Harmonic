@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BiChevronsLeft } from "react-icons/bi";
 import { FaUsers, FaEdit, FaHome } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
-import logo from "../../assets/image/logo.png";
+import logo from "../../assets/image/logo-white.png";
 import useAuth from "../../hooks/useAuth";
 
 const InstructorDashboard = () => {

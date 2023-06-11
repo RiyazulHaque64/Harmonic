@@ -1,6 +1,6 @@
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 import SectionTitle from "../components/Title/SectionTitle";
-import ClassCard from "../components/ProductCard/ClassCard";
+import ClassCard from "../components/Card/ClassCard";
 import { useGetAprovedClasses } from "../hooks/useGetClasses";
 
 const Classes = () => {

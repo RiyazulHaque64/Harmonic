@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../Title/SectionTitle";
 import { getPopularClasses } from "../../API/class";
 import useAuth from "../../hooks/useAuth";
-import ClassCard2 from "../ProductCard/ClassCard2";
+import ClassCard2 from "../Card/ClassCard2";
 import Button from "../Button/Button";
+import { Link } from "react-router-dom";
 
 const PopularClasses = () => {
   const { loading } = useAuth();
@@ -14,7 +15,7 @@ const PopularClasses = () => {
   });
   return (
     <div className="py-16 w-10/12 mx-auto">
-      <SectionTitle title="Popular Classes" />
+      <SectionTitle title="Top Classes" />
       {popularClasses &&
       Array.isArray(popularClasses) &&
       popularClasses.length > 0 ? (
@@ -24,7 +25,11 @@ const PopularClasses = () => {
               <ClassCard2 key={singleClass._id} classInfo={singleClass} />
             ))}
           </div>
-          <Button label="See all classes" />
+          <div className="w-10/12 text-center mx-auto mt-10">
+            <Link to="/classes">
+              <Button label="See all classes" />
+            </Link>
+          </div>
         </>
       ) : (
         <>

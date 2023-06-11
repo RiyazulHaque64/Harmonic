@@ -15,6 +15,7 @@ import EnrolledClasses from "../pages/StudentDashboard/EnrolledClasses";
 import ManageUsers from "../pages/AdminDashboard/ManageUsers";
 import ManageClasses from "../pages/AdminDashboard/ManageClasses";
 import PaymentHistory from "../pages/StudentDashboard/PaymentHistory";
+import Instructors from "../pages/Instructors";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/classes",
         element: <Classes />,
+      },
+      {
+        path: "/instructors",
+        element: <Instructors />,
       },
       {
         path: "/signup",
