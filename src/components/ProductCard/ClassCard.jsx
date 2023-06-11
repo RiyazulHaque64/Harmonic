@@ -14,6 +14,7 @@ const ClassCard = ({ classInfo }) => {
     instructorEmail,
     price,
     seats,
+    enrolledStudent,
   } = classInfo;
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +29,7 @@ const ClassCard = ({ classInfo }) => {
         imgUrl,
         price,
         seats,
+        enrolledStudent,
         studentEmail: user.email,
       };
       addToSelect(selectedClassInfo).then((data) => {

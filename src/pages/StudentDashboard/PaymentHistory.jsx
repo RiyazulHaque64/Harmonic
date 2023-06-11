@@ -38,7 +38,7 @@ const PaymentHistory = () => {
                   Transaction ID
                 </th>
                 <th className="border p-1 text-sm md:text-base md:p-2">
-                  Date/Time
+                  Date & Time
                 </th>
               </tr>
             </thead>
@@ -62,7 +62,7 @@ const PaymentHistory = () => {
                   </td>
                   <td className="p-1 text-[10px] md:text-base md:p-2 text-center text-gray-700">
                     <span className="bg-green-500 px-4 py-1 rounded text-white font-semibold">
-                      {singleClass.date}
+                      {singleClass.visibleDate}
                     </span>
                   </td>
                 </tr>

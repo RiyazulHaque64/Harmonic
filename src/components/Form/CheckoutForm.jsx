@@ -6,6 +6,7 @@ import axios from "axios";
 import { updateClass } from "../../API/class";
 import Swal from "sweetalert2";
 import { deleteSelectedClasses } from "../../API/select";
+import moment from "moment/moment";
 
 const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
   const { user } = useAuth();
@@ -68,6 +69,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
           ...singleClassInfo,
           transactionId: paymentIntent.id,
           date: new Date().getTime(),
+          visibleDate: moment().format("MMMM Do YYYY, h:mm:ss a"),
         };
         axios
           .post(
@@ -77,7 +79,10 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
           .then((res) => {
             if (res.data.insertedId) {
               updateClass(
-                { seats: singleClassInfo.seats - 1 },
+                {
+                  seats: singleClassInfo.seats - 1,
+                  enrolledStudent: singleClassInfo.enrolledStudent + 1,
+                },
                 singleClassInfo.classId
               ).then((res) => {
                 console.log(res.data);
