@@ -5,6 +5,7 @@ import { getTopInstructor } from "../../API/instructor";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
 import InstructorCard from "../Card/InstructorCard";
+import NoData from "../Error/NoData";
 // import { getTopInstructor } from "../../API/instructor";
 // import useAuth from "../../hooks/useAuth";
 
@@ -30,14 +31,14 @@ const PopularInstructors = () => {
               ))}
             </div>
             <div className="w-10/12 text-center mx-auto mt-10">
-              <Link to="/classes">
+              <Link to="/instructors">
                 <Button label="See all instructor" />
               </Link>
             </div>
           </>
         ) : (
           <>
-            <p>No data available</p>
+            <NoData />
           </>
         )}
       </div>

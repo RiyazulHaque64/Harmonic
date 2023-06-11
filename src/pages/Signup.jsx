@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { saveUser } from "../API/auth";
 import DynamicTitleSets from "../components/Title/DynamicTitleSets";
+import { ImSpinner9 } from "react-icons/im";
 
 const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
@@ -25,6 +26,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
+  const [localLoading, setLocalLoading] = useState(false);
   // const [uploadPicture, setUploadPicture] = useState("");
   const [password, setPassword] = useState("");
   const [passwordMatchingMessage, setPasswordMatchingMessage] = useState(false);
@@ -36,6 +38,7 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    setLocalLoading(true);
     const { name, email, password, confirmPassword, profilePic } = data;
 
     if (email && password === confirmPassword) {
@@ -43,7 +46,6 @@ const Signup = () => {
       formData.append("image", profilePic[0]);
 
       fetch(imageHostingUrl, {
-        mode: "no-cors",
         method: "POST",
         body: formData,
       })
@@ -52,34 +54,44 @@ const Signup = () => {
           const imgUrl = data.data.url;
           createUser(email, password)
             .then((result) => {
-              updateUser(name, imgUrl).then(() => {
-                const userInfo = {
-                  name: result.user.displayName,
-                  email: result.user.email,
-                  photoUrl: result.user.photoURL,
-                  role: "student",
-                };
-                saveUser(userInfo);
-                Swal.fire({
-                  position: "center",
-                  icon: "success",
-                  title: "Account created successfull",
-                  showConfirmButton: false,
-                  timer: 1500,
+              updateUser(name, imgUrl)
+                .then(() => {
+                  const userInfo = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    photoUrl: result.user.photoURL,
+                    role: "student",
+                  };
+                  saveUser(userInfo);
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Account created successfull",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  navigate("/", { replace: true });
+                  setLocalLoading(false);
+                })
+                .catch((error) => {
+                  setError(error.message);
+                  setLocalLoading(false);
                 });
-                navigate("/", { replace: true });
-              });
             })
             .catch((error) => {
               setError(error.message);
+              setLocalLoading(false);
             });
         })
         .catch((error) => {
           setError(error.message);
+          setLocalLoading(false);
         });
     } else {
       setError("Password & Confirm password didn't match");
+      setLocalLoading(false);
     }
+    setLocalLoading(false);
   };
 
   const signupWithGoogle = () => {
@@ -243,11 +255,17 @@ const Signup = () => {
               </div>
             </label> */}
           </div>
-          <input
+          <button
             className="p-2 bg-blue-500 text-white font-semibold w-full rounded mt-10 hover:bg-blue-600 duration-300 cursor-pointer hover:tracking-widest"
             type="submit"
-            value="Create"
-          />
+            disabled={localLoading}
+          >
+            {localLoading ? (
+              <ImSpinner9 className="m-auto animate-spin w-6 h-6" />
+            ) : (
+              "Create"
+            )}
+          </button>
         </form>
         <p className="mt-2">
           Already have an account? Please{" "}

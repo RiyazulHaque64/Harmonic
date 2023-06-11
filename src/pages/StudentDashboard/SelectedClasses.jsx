@@ -11,6 +11,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../components/Form/CheckoutForm";
+import NoData from "../../components/Error/NoData";
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_Payment_Gateway_PK}`);
 
@@ -139,7 +140,7 @@ const SelectedClasses = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
       <Transition appear show={isOpen} as={Fragment}>

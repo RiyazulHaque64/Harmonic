@@ -7,6 +7,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useState, Fragment } from "react";
 import Swal from "sweetalert2";
 import { BsArrowRight } from "react-icons/bs";
+import NoData from "../../components/Error/NoData";
 
 const ManageClasses = () => {
   const [allClasses, refetch] = useGetClasses();
@@ -163,7 +164,7 @@ const ManageClasses = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
       <Transition appear show={isOpen} as={Fragment}>

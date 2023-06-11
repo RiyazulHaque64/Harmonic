@@ -3,6 +3,7 @@ import getEnrolledClasses from "../../API/enrolledClasses";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
+import NoData from "../../components/Error/NoData";
 
 const PaymentHistory = () => {
   const { user, loading } = useAuth();
@@ -70,7 +71,7 @@ const PaymentHistory = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
     </div>

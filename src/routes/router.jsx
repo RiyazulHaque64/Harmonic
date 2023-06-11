@@ -16,11 +16,13 @@ import ManageUsers from "../pages/AdminDashboard/ManageUsers";
 import ManageClasses from "../pages/AdminDashboard/ManageClasses";
 import PaymentHistory from "../pages/StudentDashboard/PaymentHistory";
 import Instructors from "../pages/Instructors";
+import ErrorPage from "../components/Error/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

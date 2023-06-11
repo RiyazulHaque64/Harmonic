@@ -7,8 +7,10 @@ import { updateClass } from "../../API/class";
 import Swal from "sweetalert2";
 import { deleteSelectedClasses } from "../../API/select";
 import moment from "moment/moment";
+import { ImSpinner9 } from "react-icons/im";
 
 const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -28,6 +30,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
   }, [singleClassInfo]);
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!stripe || !elements) {
       return;
@@ -40,16 +43,19 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
     }
 
     // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    // paymentMethod
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
 
     if (error) {
       setCardError(error.message);
-    } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      setLoading(false);
     }
+    // else {
+    //   console.log("[PaymentMethod]", paymentMethod);
+    // }
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -106,6 +112,7 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
                               showConfirmButton: false,
                               timer: 1500,
                             });
+                            setLoading(false);
                             refetch();
                           }
                         }
@@ -118,7 +125,9 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
             }
           });
       }
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
@@ -151,10 +160,14 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
           </button>
           <button
             type="submit"
-            disabled={!stripe}
+            disabled={!stripe || loading}
             className="bg-blue-500 hover:bg-blue-600 duration-200 px-6 py-1 rounded text-white font-semibold"
           >
-            Pay ${singleClassInfo.price}
+            {loading ? (
+              <ImSpinner9 className="m-auto animate-spin w-6 h-6" />
+            ) : (
+              `Pay ${singleClassInfo.price}`
+            )}
           </button>
         </div>
       </form>

@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { updateClass } from "../../API/class";
 import { useQuery } from "@tanstack/react-query";
 import getMyClasses from "../../API/getMyClasses";
+import NoData from "../../components/Error/NoData";
 
 const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
@@ -203,7 +204,7 @@ const MyClasses = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
 

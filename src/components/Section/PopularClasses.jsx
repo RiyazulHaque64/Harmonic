@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import ClassCard2 from "../Card/ClassCard2";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
+import NoData from "../Error/NoData";
 
 const PopularClasses = () => {
   const { loading } = useAuth();
@@ -33,7 +34,7 @@ const PopularClasses = () => {
         </>
       ) : (
         <>
-          <p>No data available</p>
+          <NoData />
         </>
       )}
     </div>

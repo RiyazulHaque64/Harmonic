@@ -4,6 +4,7 @@ import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import { getUsers, saveUser } from "../../API/auth";
 import Swal from "sweetalert2";
+import NoData from "../../components/Error/NoData";
 
 const ManageUsers = () => {
   const { user, loading } = useAuth();
@@ -108,7 +109,7 @@ const ManageUsers = () => {
                   </th>
                   <td className="p-1">
                     <img
-                      className="w-8 md:w-12 h-8 lg:h-12 mx-auto"
+                      className="w-8 md:w-12 h-8 lg:h-12 mx-auto rounded-full"
                       src={singleUser.photoUrl}
                       alt=""
                     />
@@ -158,7 +159,7 @@ const ManageUsers = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
     </div>

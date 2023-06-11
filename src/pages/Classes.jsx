@@ -2,6 +2,7 @@ import DynamicTitleSets from "../components/Title/DynamicTitleSets";
 import SectionTitle from "../components/Title/SectionTitle";
 import ClassCard from "../components/Card/ClassCard";
 import { useGetAprovedClasses } from "../hooks/useGetClasses";
+import NoData from "../components/Error/NoData";
 
 const Classes = () => {
   const [allClasses, refetch] = useGetAprovedClasses();
@@ -25,7 +26,7 @@ const Classes = () => {
         </>
       ) : (
         <>
-          <p>No data available</p>
+          <NoData />
         </>
       )}
     </div>

@@ -3,6 +3,7 @@ import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
 import getEnrolledClasses from "../../API/enrolledClasses";
+import NoData from "../../components/Error/NoData";
 
 const EnrolledClasses = () => {
   const { user, loading } = useAuth();
@@ -74,7 +75,7 @@ const EnrolledClasses = () => {
             </tbody>
           </table>
         ) : (
-          <h2>No Data found</h2>
+          <NoData />
         )}
       </div>
     </div>
