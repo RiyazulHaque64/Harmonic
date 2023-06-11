@@ -30,6 +30,10 @@ export const updateClass = (classInfo, id) => {
   return res;
 };
 
-// export const getMyClass = (user) => {
-//   return
-// };
+// Get popular classes
+export const getPopularClasses = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_SERVER_BASE_URL}/popularClasses`
+  );
+  return res.data;
+};

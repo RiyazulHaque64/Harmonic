@@ -1,6 +1,6 @@
 import Button from "../components/Button/Button";
 import useAuth from "../hooks/useAuth";
-import logo from "../assets/image/logo1.png";
+import logo from "../assets/image/logo.png";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {

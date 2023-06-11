@@ -78,30 +78,43 @@ const CheckoutForm = ({ closeModal, singleClassInfo, refetch }) => {
           )
           .then((res) => {
             if (res.data.insertedId) {
-              updateClass(
-                {
-                  seats: singleClassInfo.seats - 1,
-                  enrolledStudent: singleClassInfo.enrolledStudent + 1,
-                },
-                singleClassInfo.classId
-              ).then((res) => {
-                console.log(res.data);
-                deleteSelectedClasses(singleClassInfo._id).then((data) => {
-                  console.log(data.data);
-                  if (data.data.deletedCount > 0) {
-                    Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "You have successfully enrolled in this class",
-                      showConfirmButton: false,
-                      timer: 1500,
-                    });
-                    refetch();
-                  }
-                });
+              axios
+                .get(
+                  `${import.meta.env.VITE_SERVER_BASE_URL}/enrolledClass/${
+                    singleClassInfo.classId
+                  }`
+                )
+                .then((data) => {
+                  console.log(data);
+                  const updateClassInfo = {
+                    seats: data.data.seats - 1,
+                    enrolledStudent: data.data.enrolledStudent + 1,
+                  };
+                  console.log(updateClassInfo);
+                  updateClass(updateClassInfo, singleClassInfo.classId).then(
+                    (res) => {
+                      console.log(res.data);
+                      deleteSelectedClasses(singleClassInfo._id).then(
+                        (data) => {
+                          console.log(data.data);
+                          if (data.data.deletedCount > 0) {
+                            Swal.fire({
+                              position: "center",
+                              icon: "success",
+                              title:
+                                "You have successfully enrolled in this class",
+                              showConfirmButton: false,
+                              timer: 1500,
+                            });
+                            refetch();
+                          }
+                        }
+                      );
 
-                closeModal();
-              });
+                      closeModal();
+                    }
+                  );
+                });
             }
           });
       }
