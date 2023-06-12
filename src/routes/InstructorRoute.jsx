@@ -1,10 +1,12 @@
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
+import useGetUserRole from "../hooks/useGetUseraRole";
 
 const InstructorRoute = ({ children }) => {
-  const { loading, role } = useAuth();
+  const { loading } = useAuth();
+  const [userRole, isUserLoading] = useGetUserRole();
   const location = useLocation();
-  if (loading) {
+  if (loading || isUserLoading) {
     return (
       <div className="w-full h-[calc(100vh - 56px)] lg:h-[calc(100vh - 80px)] 2xl:h-[calc(100vh - 96px)] flex items-center justify-center">
         <svg
@@ -21,7 +23,7 @@ const InstructorRoute = ({ children }) => {
       </div>
     );
   }
-  if (role === "instructor") {
+  if (userRole?.role === "instructor") {
     return children;
   }
   return <Navigate to="/" state={{ from: location }} replace />;

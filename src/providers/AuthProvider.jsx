@@ -21,14 +21,6 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState(null);
-  useEffect(() => {
-    if (user) {
-      fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/users/${user.email}`)
-        .then((res) => res.json())
-        .then((data) => setRole(data.role));
-    }
-  }, [user]);
 
   //   create user with email and password
   const createUser = (email, password) => {
@@ -92,7 +84,6 @@ const AuthProvider = ({ children }) => {
     logout,
     updateUser,
     signInWithGoogle,
-    role,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

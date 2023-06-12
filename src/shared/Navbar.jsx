@@ -5,10 +5,12 @@ import { Link, NavLink } from "react-router-dom";
 import { BsFillBrightnessHighFill } from "react-icons/bs";
 import { MdDarkMode } from "react-icons/md";
 import { useEffect, useState } from "react";
+import useGetUserRole from "../hooks/useGetUseraRole";
 
 const Navbar = () => {
-  const { user, logout, role } = useAuth();
+  const { user, logout } = useAuth();
   const [theme, setTheme] = useState("light");
+  const [userRole] = useGetUserRole();
 
   useEffect(() => {
     if (theme === "dark") {
@@ -46,11 +48,11 @@ const Navbar = () => {
 
             {user ? (
               <>
-                {role === "admin" ? (
+                {userRole?.role === "admin" ? (
                   <li className="text-white font-semibold text-lg">
                     <NavLink to="/admin/dashboard">Dashboard</NavLink>
                   </li>
-                ) : role === "instructor" ? (
+                ) : userRole?.role === "instructor" ? (
                   <li className="text-white font-semibold text-lg">
                     <NavLink to="/instructor/dashboard">Dashboard</NavLink>
                   </li>
