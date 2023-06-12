@@ -2,18 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
-import { getUsers, saveUser } from "../../API/auth";
+import { saveUser } from "../../API/auth";
 import Swal from "sweetalert2";
 import NoData from "../../components/Error/NoData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ManageUsers = () => {
   const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { data: users, refetch } = useQuery({
     queryKey: ["users", user?.email],
     enabled: !loading && !!user?.email,
-    queryFn: getUsers,
+    queryFn: async () => {
+      const res = await axiosSecure(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/users`
+      );
+      return res.data;
+    },
   });
-  console.log(users);
 
   const makeAdmin = (email) => {
     Swal.fire({

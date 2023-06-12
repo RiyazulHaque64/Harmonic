@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className="w-full">
       <div className="flex">
-        <div className="text-center w-1/2 bg-blue-700 py-10 flex flex-col justify-center items-center">
+        <div className="text-center w-1/2 bg-blue-700 dark:bg-blue-800 py-10 flex flex-col justify-center items-center">
           <div>
             <Link className="flex gap-2 items-center" to="/">
               <img className="w-12" src={logo} alt="Logo" />
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className=" w-1/2 bg-blue-600 py-10 flex flex-col justify-center items-center">
+        <div className=" w-1/2 bg-blue-600 dark:bg-blue-700 py-10 flex flex-col justify-center items-center">
           <div>
             <h2 className="text-xl font-semibold text-white mb-2 uppercase">
               Important Links
@@ -55,7 +55,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-blue-800 py-4 text-center">
+      <div className="bg-blue-800 dark:bg-blue-900 py-4 text-center">
         <p className="text-sm lg:text-base font-semibold text-white">
           Copyrights &copy; 2023 Chef&apos;s Kitchen All Rights Reserved.
         </p>

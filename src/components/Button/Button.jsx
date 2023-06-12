@@ -10,8 +10,8 @@ const Button = ({ label, onClick, disabled, outline, small, icon: Icon }) => {
           transition
           px-6
           text-white
-          ${outline ? "bg-transparent hover:bg-white" : "bg-blue-500"}
-          ${outline ? "border-white hover:text-blue-500" : "border-blue-500"}
+          ${outline ? "bg-transparent" : "bg-blue-500 dark:bg-blue-900"}
+          ${outline ? "border-white" : "border-blue-500 dark:border-blue-900"}
           ${small ? "text-md" : "text-base"}
           ${small ? "py-1" : "py-2"}
           ${small ? "border-[2px]" : "border-2"}

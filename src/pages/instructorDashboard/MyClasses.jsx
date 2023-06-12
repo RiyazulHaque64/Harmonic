@@ -9,8 +9,8 @@ import { ImSpinner9 } from "react-icons/im";
 import Swal from "sweetalert2";
 import { updateClass } from "../../API/class";
 import { useQuery } from "@tanstack/react-query";
-import getMyClasses from "../../API/getMyClasses";
 import NoData from "../../components/Error/NoData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
@@ -18,10 +18,16 @@ const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
 
 const MyClasses = () => {
   const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { data: classes, refetch } = useQuery({
     queryKey: ["myClass", user?.email],
     enabled: !loading && !!user?.email,
-    queryFn: () => getMyClasses(user),
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/classes/${user?.email}`
+      );
+      return res.data;
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);

@@ -60,9 +60,13 @@ const ClassCard = ({ classInfo }) => {
     }
   };
   return (
-    <div className={`border rounded-lg ${seats === 0 && "bg-red-500"}`}>
+    <div
+      className={`border rounded-lg ${
+        seats === 0 && "bg-red-500"
+      } dark:bg-white`}
+    >
       <img
-        className="h-48 xl:h-56 w-full object-cover rounded-lg"
+        className="h-48 xl:h-56 w-full object-cover rounded-ss-lg rounded-se-lg"
         src={imgUrl}
         alt="Course Image"
       />
@@ -71,7 +75,7 @@ const ClassCard = ({ classInfo }) => {
         <h4 className="text-gray-800 mb-2">{instructorName}</h4>
         <p className="text-orange-500 font-bold text-2xl">${price}</p>
       </div>
-      <div className="flex items-center justify-between bg-blue-400 w-full rounded-ee-lg rounded-es-lg">
+      <div className="flex items-center justify-between bg-blue-400 dark:bg-blue-800 w-full rounded-ee-lg rounded-es-lg">
         <div className="w-1/2 text-center border-r border-blue-300">
           <p className="text-white font-semibold p-1 lg:p-3">
             Only <span>{seats}</span> Seats

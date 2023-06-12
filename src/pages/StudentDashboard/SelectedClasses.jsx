@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
-import { deleteSelectedClasses, getSelectedClasses } from "../../API/select";
+import { deleteSelectedClasses } from "../../API/select";
 import Swal from "sweetalert2";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaCreditCard } from "react-icons/fa";
@@ -12,15 +12,20 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../../components/Form/CheckoutForm";
 import NoData from "../../components/Error/NoData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const stripePromise = loadStripe(`${import.meta.env.VITE_Payment_Gateway_PK}`);
 
 const SelectedClasses = () => {
   const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { data: selectedClasses, refetch } = useQuery({
     queryKey: ["selectedClass", user?.email],
     enabled: !loading && !!user?.email,
-    queryFn: () => getSelectedClasses(user),
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/selected/${user?.email}`);
+      return res.data;
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);

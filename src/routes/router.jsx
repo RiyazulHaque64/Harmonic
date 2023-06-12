@@ -19,6 +19,7 @@ import Instructors from "../pages/Instructors";
 import ErrorPage from "../components/Error/ErrorPage";
 import AdminRoute from "./AdminRoute";
 import InstructorRoute from "./InstructorRoute";
+import DashboardHome from "../pages/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/admin/dashboard",
+        element: <DashboardHome />,
+      },
+      {
         path: "/admin/dashboard/manageUsers",
         element: <ManageUsers />,
       },
@@ -79,6 +84,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "/instructor/dashboard",
+        element: <DashboardHome />,
+      },
+      {
         path: "/instructor/dashboard/addClass",
         element: <AddClass />,
       },
@@ -96,6 +105,10 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "/student/dashboard",
+        element: <DashboardHome />,
+      },
       {
         path: "/student/dashboard/selectedClasses",
         element: <SelectedClasses />,

@@ -8,13 +8,18 @@ export const addToSelect = (classInfo) => {
   return res;
 };
 
-export const getSelectedClasses = async (user) => {
-  const res = await fetch(
-    `${import.meta.env.VITE_SERVER_BASE_URL}/selected/${user?.email}`
-  );
-  const data = await res.json();
-  return data;
-};
+// export const getSelectedClasses = async (user) => {
+//   const res = await axios.get(
+//     `${import.meta.env.VITE_SERVER_BASE_URL}/selected/${user?.email}`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+//       },
+//     }
+//   );
+//   // const data = await res.json();
+//   return res.data;
+// };
 
 export const deleteSelectedClasses = async (id) => {
   const res = await axios.delete(

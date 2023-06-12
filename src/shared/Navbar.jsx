@@ -2,11 +2,27 @@ import Button from "../components/Button/Button";
 import useAuth from "../hooks/useAuth";
 import logo from "../assets/image/logo-white.png";
 import { Link, NavLink } from "react-router-dom";
+import { BsFillBrightnessHighFill } from "react-icons/bs";
+import { MdDarkMode } from "react-icons/md";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, logout, role } = useAuth();
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
   return (
-    <div className="w-full z-20 bg-blue-500 shadow">
+    <div className="w-full z-20 bg-blue-500 dark:bg-blue-900 shadow">
       <div className="w-10/12 h-14 md:h-16 lg:h-20 2xl:h-24 mx-auto flex items-center justify-between">
         <div>
           <Link className="flex gap-2 items-center" to="/">
@@ -68,6 +84,22 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
+            <li
+              className="text-white font-semibold text-lg cursor-pointer"
+              onClick={handleThemeSwitch}
+            >
+              {theme === "dark" ? (
+                <div className="flex items-center gap-2 border-2 border-white py-1 px-3 rounded-full">
+                  <BsFillBrightnessHighFill title="Light" className="w-6 h-6" />
+                  <span>Switch Light</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 border-2 border-white py-1 px-3 rounded-full">
+                  <MdDarkMode title="Light" className="w-6 h-6" />
+                  <span>Switch Dark</span>
+                </div>
+              )}
+            </li>
           </ul>
         </nav>
       </div>

@@ -6,6 +6,7 @@ import ClassCard2 from "../Card/ClassCard2";
 import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 import NoData from "../Error/NoData";
+import { Fade } from "react-awesome-reveal";
 
 const PopularClasses = () => {
   const { loading } = useAuth();
@@ -15,7 +16,7 @@ const PopularClasses = () => {
     queryFn: getPopularClasses,
   });
   return (
-    <div className="py-16 w-10/12 mx-auto">
+    <div className="pt-16 w-10/12 mx-auto">
       <SectionTitle title="Top Classes" />
       {popularClasses &&
       Array.isArray(popularClasses) &&
@@ -28,7 +29,9 @@ const PopularClasses = () => {
           </div>
           <div className="w-10/12 text-center mx-auto mt-10">
             <Link to="/classes">
-              <Button label="See all classes" />
+              <Fade duration={2000}>
+                <Button label="See all classes" />
+              </Fade>
             </Link>
           </div>
         </>

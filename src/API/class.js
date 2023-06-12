@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const getClass = async () => {
-  const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/classes`);
-  const data = await res.json();
-  return data;
-};
+// export const getClass = async () => {
+//   const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/classes`);
+//   const data = await res.json();
+//   return data;
+// };
 
 export const getApprovedClass = async () => {
   const res = await fetch(

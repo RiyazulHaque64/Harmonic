@@ -2,15 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import DynamicTitleSets from "../../components/Title/DynamicTitleSets";
 import SectionTitle from "../../components/Title/SectionTitle";
 import useAuth from "../../hooks/useAuth";
-import getEnrolledClasses from "../../API/enrolledClasses";
 import NoData from "../../components/Error/NoData";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const EnrolledClasses = () => {
   const { user, loading } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const { data: enrolledClasses } = useQuery({
     queryKey: ["myClass", user?.email],
     enabled: !loading && !!user?.email,
-    queryFn: () => getEnrolledClasses(user),
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/enrolledClasses/${user?.email}`
+      );
+      return res.data;
+    },
   });
   return (
     <div>
