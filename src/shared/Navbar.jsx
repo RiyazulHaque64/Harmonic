@@ -4,7 +4,7 @@ import logo from "../assets/image/logo-white.png";
 import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, role } = useAuth();
   return (
     <div className="w-full z-20 bg-blue-500 shadow">
       <div className="w-10/12 h-14 md:h-16 lg:h-20 2xl:h-24 mx-auto flex items-center justify-between">
@@ -30,15 +30,19 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <li className="text-white font-semibold text-lg">
-                  <NavLink to="/instructor/dashboard">IDashboard</NavLink>
-                </li>
-                <li className="text-white font-semibold text-lg">
-                  <NavLink to="/student/dashboard">SDashboard</NavLink>
-                </li>
-                <li className="text-white font-semibold text-lg">
-                  <NavLink to="/admin/dashboard">ADashboard</NavLink>
-                </li>
+                {role === "admin" ? (
+                  <li className="text-white font-semibold text-lg">
+                    <NavLink to="/admin/dashboard">Dashboard</NavLink>
+                  </li>
+                ) : role === "instructor" ? (
+                  <li className="text-white font-semibold text-lg">
+                    <NavLink to="/instructor/dashboard">Dashboard</NavLink>
+                  </li>
+                ) : (
+                  <li className="text-white font-semibold text-lg">
+                    <NavLink to="/student/dashboard">Dashboard</NavLink>
+                  </li>
+                )}
                 <li className="text-white font-semibold text-lg">
                   <Button
                     onClick={logout}

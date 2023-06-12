@@ -17,6 +17,8 @@ import ManageClasses from "../pages/AdminDashboard/ManageClasses";
 import PaymentHistory from "../pages/StudentDashboard/PaymentHistory";
 import Instructors from "../pages/Instructors";
 import ErrorPage from "../components/Error/ErrorPage";
+import AdminRoute from "./AdminRoute";
+import InstructorRoute from "./InstructorRoute";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +50,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin/dashboard",
-    element: <AdminDashboard />,
+    element: (
+      <PrivateRoute>
+        <AdminRoute>
+          <AdminDashboard />
+        </AdminRoute>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/admin/dashboard/manageUsers",
@@ -62,7 +70,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/instructor/dashboard",
-    element: <InstructorDashboard />,
+    element: (
+      <PrivateRoute>
+        <InstructorRoute>
+          <InstructorDashboard />
+        </InstructorRoute>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/instructor/dashboard/addClass",

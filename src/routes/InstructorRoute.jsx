@@ -1,14 +1,14 @@
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+const InstructorRoute = ({ children }) => {
+  const { loading, role } = useAuth();
   const location = useLocation();
   if (loading) {
     return (
       <div className="w-full h-[calc(100vh - 56px)] lg:h-[calc(100vh - 80px)] 2xl:h-[calc(100vh - 96px)] flex items-center justify-center">
         <svg
-          className="w-16 mt-16 md:mt-20 lg:mt-28 xl:mt-32 2xl:mt-36 animate-spin"
+          className="w-16 animate-spin"
           data-name="Layer 1"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
@@ -21,10 +21,10 @@ const PrivateRoute = ({ children }) => {
       </div>
     );
   }
-  if (user) {
+  if (role === "instructor") {
     return children;
   }
-  return <Navigate to="/login" state={{ from: location }} replace />;
+  return <Navigate to="/" state={{ from: location }} replace />;
 };
 
-export default PrivateRoute;
+export default InstructorRoute;

@@ -21,12 +21,11 @@ const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
   import.meta.env.VITE_Image_Upload_Token
 }`;
 const Signup = () => {
-  const { createUser, updateUser, signInWithGoogle } = useAuth();
+  const { createUser, updateUser, signInWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
-  const [localLoading, setLocalLoading] = useState(false);
   // const [uploadPicture, setUploadPicture] = useState("");
   const [password, setPassword] = useState("");
   const [passwordMatchingMessage, setPasswordMatchingMessage] = useState(false);
@@ -38,7 +37,6 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    setLocalLoading(true);
     const { name, email, password, confirmPassword, profilePic } = data;
 
     if (email && password === confirmPassword) {
@@ -71,27 +69,21 @@ const Signup = () => {
                     timer: 1500,
                   });
                   navigate("/", { replace: true });
-                  setLocalLoading(false);
                 })
                 .catch((error) => {
                   setError(error.message);
-                  setLocalLoading(false);
                 });
             })
             .catch((error) => {
               setError(error.message);
-              setLocalLoading(false);
             });
         })
         .catch((error) => {
           setError(error.message);
-          setLocalLoading(false);
         });
     } else {
       setError("Password & Confirm password didn't match");
-      setLocalLoading(false);
     }
-    setLocalLoading(false);
   };
 
   const signupWithGoogle = () => {
@@ -258,9 +250,9 @@ const Signup = () => {
           <button
             className="p-2 bg-blue-500 text-white font-semibold w-full rounded mt-10 hover:bg-blue-600 duration-300 cursor-pointer hover:tracking-widest"
             type="submit"
-            disabled={localLoading}
+            disabled={loading}
           >
-            {localLoading ? (
+            {loading ? (
               <ImSpinner9 className="m-auto animate-spin w-6 h-6" />
             ) : (
               "Create"

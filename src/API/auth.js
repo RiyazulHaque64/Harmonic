@@ -19,9 +19,9 @@ export const getUsers = async () => {
   return res.data;
 };
 
-export const getUserRole = async (email) => {
-  const res = await axios.get(
-    `${import.meta.env.VITE_SERVER_BASE_URL}/users/${email}`
-  );
-  return res.data?.role;
-};
+// export const getUserRole = async (email) => {
+//   const res = await axios.get(
+//     `${import.meta.env.VITE_SERVER_BASE_URL}/users/${email}`
+//   );
+//   return res;
+// };
