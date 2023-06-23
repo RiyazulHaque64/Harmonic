@@ -6,7 +6,7 @@ import { Zoom } from "react-awesome-reveal";
 
 const Stat = () => {
   return (
-    <div className="stat-bg grid lg:grid-cols-4 gap-10 py-16 w-10/12 mx-auto px-10 rounded-lg">
+    <div className="stat-bg grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 py-16 w-10/12 mx-auto px-10 rounded-lg">
       <Zoom duration={1500}>
         <div className="bg-blue-400/20 dark:bg-white/80 rounded-lg p-6 flex items-center justify-between shadow-xl">
           <div>

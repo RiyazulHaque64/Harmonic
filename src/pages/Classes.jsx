@@ -14,7 +14,7 @@ const Classes = () => {
 
       {allClasses && Array.isArray(allClasses) && allClasses.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6 2xl:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 lg:gap-6 2xl:gap-8">
             {allClasses.map((singleClass) => (
               <ClassCard
                 key={singleClass._id}

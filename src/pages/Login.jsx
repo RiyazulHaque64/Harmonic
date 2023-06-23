@@ -68,9 +68,9 @@ const Login = () => {
     });
   };
   return (
-    <div className="py-20 bg-blue-100/60 flex flex-col items-center justify-center">
-      <DynamicTitleSets title="Signup" />
-      <div className="w-2/6 bg-white p-10 rounded-lg shasow">
+    <div className="px-8 md:px-0 py-10 md:py-20 bg-blue-100/60 flex flex-col items-center justify-center">
+      <DynamicTitleSets title="Login" />
+      <div className="w-full md:w-8/12 lg:w-1/2 xl:w-5/12 2xl:w-2/6 bg-white p-10 rounded-lg shasow">
         {error && (
           <div className="text-xl text-red-600 bg-red-50 border border-red-200 flex items-center justify-between shadow p-6 rounded-lg">
             <div className="flex items-center justify-center gap-2">

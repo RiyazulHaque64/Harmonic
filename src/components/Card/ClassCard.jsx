@@ -71,7 +71,9 @@ const ClassCard = ({ classInfo }) => {
         alt="Course Image"
       />
       <div className="p-6 lg:p-8 text-center">
-        <h2 className="text-2xl text-gray-800 font-semibold">{className}</h2>
+        <h2 className="text-2xl lg:text-xl xl:text-2xl text-gray-800 font-semibold">
+          {className}
+        </h2>
         <h4 className="text-gray-800 mb-2">{instructorName}</h4>
         <p className="text-orange-500 font-bold text-2xl">${price}</p>
       </div>

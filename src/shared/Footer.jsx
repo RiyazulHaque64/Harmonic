@@ -6,8 +6,8 @@ import { MdWifiCalling3 } from "react-icons/md";
 const Footer = () => {
   return (
     <div className="w-full">
-      <div className="flex">
-        <div className="text-center w-1/2 bg-blue-700 dark:bg-blue-800 py-10 flex flex-col justify-center items-center">
+      <div className="flex flex-col md:flex-row">
+        <div className="text-center w-full md:w-1/2 bg-blue-600 md:bg-blue-700 dark:bg-blue-800 py-10 flex flex-col justify-center md:items-center px-8 lg:px-0">
           <div>
             <Link className="flex gap-2 items-center" to="/">
               <img className="w-12" src={logo} alt="Logo" />
@@ -17,7 +17,7 @@ const Footer = () => {
             </Link>
             <div className="mt-6 flex items-center gap-2">
               <FaLocationArrow className="text-white w-5 h-5" />
-              <p className="text-white">
+              <p className="text-white text-left">
                 Multiplan Center, New Elephant Road, Dhaka-1205
               </p>
             </div>
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className=" w-1/2 bg-blue-600 dark:bg-blue-700 py-10 flex flex-col justify-center items-center">
+        <div className="w-full md:w-1/2 bg-blue-600 dark:bg-blue-700 py-10 flex flex-col justify-center md:items-center px-8 md:px-0">
           <div>
             <h2 className="text-xl font-semibold text-white mb-2 uppercase">
               Important Links
@@ -57,7 +57,7 @@ const Footer = () => {
       </div>
       <div className="bg-blue-800 dark:bg-blue-900 py-4 text-center">
         <p className="text-sm lg:text-base font-semibold text-white">
-          Copyrights &copy; 2023 Chef&apos;s Kitchen All Rights Reserved.
+          Copyrights &copy; 2023 Harmonic All Rights Reserved.
         </p>
       </div>
     </div>

@@ -16,7 +16,7 @@ const Instructors = () => {
       <SectionTitle title="Our expert instructors" />
       {instructors && Array.isArray(instructors) && instructors.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6 xl:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 lg:gap-6 xl:gap-8">
             {instructors.map((instructor) => (
               <InstructorCard
                 key={instructor._id}

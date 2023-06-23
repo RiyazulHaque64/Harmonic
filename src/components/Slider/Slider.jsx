@@ -13,7 +13,7 @@ const Slider = () => {
       <div className="relative">
         <img
           className="w-full h-[calc(100vh - 80px)]"
-          src={sliderImg1}
+          src={sliderImg3}
           alt=""
         />
         <div className="absolute top-0 right-0 bottom-0 left-0 bg-black/10 flex flex-col items-center justify-center">
@@ -27,8 +27,8 @@ const Slider = () => {
               Learn Music, earn certificates
             </h4>
           </Fade>
-          <Fade duration={2000} className="w-1/2 mb-6 lg:mb-10 2xl:mb-12">
-            <p className="text-white ">
+          <Fade duration={2000} className="w-1/2 mb-0 lg:mb-10 2xl:mb-12">
+            <p className="text-white hidden lg:block">
               Learn Music, earn certificates with free online courses from
               Harvard, Stanford, MIT, University of Pennsylvania and other top
               universities around the world. Read reviews to decide if a class
@@ -52,10 +52,10 @@ const Slider = () => {
           <h2 className="text-2xl md:text-5xl lg:text-7xl text-white font-bold uppercase tracking-widest">
             Music Lessons
           </h2>
-          <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-4">
+          <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">
             Learn Music, earn certificates
           </h4>
-          <p className="text-white w-1/2 mb-6 lg:mb-10 2xl:mb-12">
+          <p className="text-white w-1/2 mb-6 lg:mb-10 2xl:mb-12 hidden lg:block">
             Learn Music, earn certificates with free online courses from
             Harvard, Stanford, MIT, University of Pennsylvania and other top
             universities around the world. Read reviews to decide if a class is
@@ -69,7 +69,7 @@ const Slider = () => {
       <div className="relative">
         <img
           className="w-full h-[calc(100vh - 80px)]"
-          src={sliderImg3}
+          src={sliderImg1}
           alt=""
         />
         <div className="absolute top-0 right-0 bottom-0 left-0 bg-black/10 flex flex-col items-center justify-center">
@@ -78,10 +78,10 @@ const Slider = () => {
               Music Lessons
             </h2>
           </Fade>
-          <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-4">
+          <h4 className="text-white text-lg md:text-xl lg:text-2xl font-semibold mb-3 lg:mb-4">
             Learn Music, earn certificates
           </h4>
-          <p className="text-white w-1/2 mb-6 lg:mb-10 2xl:mb-12">
+          <p className="text-white w-1/2 mb-6 lg:mb-10 2xl:mb-12 hidden lg:block">
             Learn Music, earn certificates with free online courses from
             Harvard, Stanford, MIT, University of Pennsylvania and other top
             universities around the world. Read reviews to decide if a class is
