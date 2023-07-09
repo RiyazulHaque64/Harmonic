@@ -2,7 +2,7 @@
 
 Live website link: https://harmonic-352e3.web.app/
 
-- Toy House is a online site for music training in summer vacation.
+- Harmonic is a online site for music training in summer vacation.
 - An instructor can add a course on this website
 - A student can enroll in a course on this website and payment with stripe.
 - An admin can handle the entire site
